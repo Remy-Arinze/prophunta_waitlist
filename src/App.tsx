@@ -139,40 +139,49 @@ function App() {
           <motion.div
             variants={containerVariants}
             initial="hidden"
-            animate="visible"
-            className="text-left"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-left space-y-8"
           >
-            <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6">
-              Renting and <br />
-              <span className="text-gradient">Managing Properties</span> <br />
-              Just Got Easier.
-            </motion.h1>
-            
-            <motion.p variants={itemVariants} className="text-gray-400 text-lg md:text-xl max-w-xl mb-12 leading-relaxed">
-              PropHunta is transforming the Nigerian real estate landscape by eliminating predatory agent fees and the constant stress of property inspections. Whether you're a tenant looking for a verified, hassle-free home or a property owner wanting to securely manage your assets, track tenants, and collect payments from anywhere in the world, we've built the all-in-one platform to make it happen.
-            </motion.p>
+            <div className="space-y-6">
+              <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
+                Renting and <br />
+                <span className="text-gradient">Managing Properties</span> <br />
+                Just Got Easier.
+              </motion.h1>
+              
+              <motion.p variants={itemVariants} className="text-gray-400 text-base md:text-lg lg:text-xl max-w-xl leading-relaxed">
+                PropHunta is transforming the Nigerian real estate landscape by eliminating predatory agent fees and the constant stress of property inspections. Whether you're a tenant looking for a verified, hassle-free home or a property owner wanting to securely manage your assets, track tenants, and collect payments from anywhere in the world, we've built the all-in-one platform to make it happen.
+              </motion.p>
+            </div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 gap-6">
+            <motion.div variants={itemVariants} className="grid grid-cols-1 gap-4 sm:gap-6 pt-4">
               {features.map((feature, i) => (
-                <div key={i} className="flex gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5 group">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <motion.div 
+                  key={i} 
+                  variants={itemVariants}
+                  whileHover={{ x: 10 }}
+                  className="flex gap-4 p-4 rounded-2xl bg-white/0 hover:bg-white/5 transition-all border border-transparent hover:border-white/5 group cursor-default"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform shadow-inner">
                     {feature.icon}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-                    <p className="text-sm text-gray-400">{feature.description}</p>
+                    <h3 className="font-semibold text-white mb-1 text-base md:text-lg">{feature.title}</h3>
+                    <p className="text-sm text-gray-400 leading-relaxed">{feature.description}</p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </motion.div>
           </motion.div>
 
           {/* Right Column: Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
+            className="relative lg:sticky lg:top-24"
           >
             {/* Glow Effect behind card */}
             <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-emerald-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
