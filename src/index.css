@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base colors - clean white background */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+
+    /* Card surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+
+    /* Primary - Teal green (matching PropEx) */
+    --primary: 174 100% 29%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Accent - Vibrant teal */
+    --accent: 174 100% 35%;
+    --accent-foreground: 0 0% 98%;
+
+    /* Muted - Subtle gray tones */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    /* Border and input */
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 174 100% 35%;
+
+    /* Gradients (matching PropEx) */
+    --gradient-primary: linear-gradient(135deg, hsl(174 100% 29%), hsl(184 100% 35%));
+    --gradient-electric: linear-gradient(135deg, hsl(174 100% 35%), hsl(184 100% 40%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(174 20% 98%));
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 3%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+    --primary: 174 100% 35%;
+    --primary-foreground: 0 0% 3%;
+    --accent: 174 100% 35%;
+    --accent-foreground: 0 0% 3%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+.glass-card {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-emerald-500 to-cyan-500;
+}
+
+.bg-mesh {
+  background-color:hsla(240,10%,4%,1);
+  background-image:
+    radial-gradient(at 0% 0%, hsla(174,100%,29%,0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(184,100%,35%,0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(174,100%,29%,0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(184,100%,35%,0.15) 0px, transparent 50%);
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-[hsl(174,100%,29%)] to-[hsl(184,100%,35%)] text-white;
+}
