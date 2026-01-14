@@ -1,16 +1,11 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, CheckCircle2, Loader2, Shield, Zap, Search, ArrowRight } from 'lucide-react'
+import { useForm, ValidationError } from '@formspree/react'
 import './App.css'
 
-// Formspree endpoint
-const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'YOUR_FORMSPREE_FORM_ID'
-
-interface FormData {
-  email: string
-  name: string
-  interest: string
-}
+// Formspree endpoint ID
+const FORMSPREE_ID = 'mbddlglg'
 
 const features = [
   {
@@ -31,61 +26,12 @@ const features = [
 ]
 
 function App() {
-  const [formData, setFormData] = useState<FormData>({
-    email: '',
-    name: '',
-    interest: ''
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-  const [error, setError] = useState('')
+  const [state, handleSubmit] = useForm(FORMSPREE_ID);
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-    setError('')
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-
-    if (!formData.email || !formData.name) {
-      setError('Required fields are missing')
-      return
-    }
-
-    setIsSubmitting(true)
-
-    try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_ENDPOINT}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-
-      if (response.ok) {
-        setIsSuccess(true)
-        setFormData({ email: '', name: '', interest: '' })
-      } else {
-        setError('Something went wrong. Please try again.')
-      }
-    } catch (err) {
-      setError('Connection error. Please try again.')
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -133,8 +79,8 @@ function App() {
         ))}
       </div>
 
-      <main className="relative z-10 container mx-auto px-4 py-12 md:py-24 min-h-screen flex flex-col items-center justify-center">
-        <div className="grid lg:grid-cols-2 gap-16 items-start w-full max-w-6xl">
+      <main className="relative z-10 container mx-auto px-4 py-12 md:py-24 min-h-screen flex flex-col items-center">
+        <div className="grid md:grid-cols-2 gap-16 items-start w-full max-w-6xl mt-8 md:mt-16">
           {/* Left Column: Content */}
           <motion.div
             variants={containerVariants}
@@ -181,14 +127,14 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative lg:sticky lg:top-24"
+            className="md:sticky md:top-32 self-start"
           >
             {/* Glow Effect behind card */}
             <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-emerald-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
             
             <div className="glass-card relative p-8 md:p-10 rounded-3xl overflow-hidden">
               <AnimatePresence mode="wait">
-                {!isSuccess ? (
+                {!state.succeeded ? (
                   <motion.div
                     key="form"
                     initial={{ opacity: 0 }}
@@ -200,56 +146,55 @@ function App() {
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Name</label>
+                        <label htmlFor="name" className="text-sm font-medium text-gray-300">Name</label>
                         <input
+                          id="name"
                           type="text"
                           name="name"
-                          value={formData.name}
-                          onChange={handleChange}
                           placeholder="Your full name"
                           className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none"
                           required
                         />
+                        <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-400 text-xs mt-1" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">Email Address</label>
+                        <label htmlFor="email" className="text-sm font-medium text-gray-300">Email Address</label>
                         <div className="relative">
                           <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                           <input
+                            id="email"
                             type="email"
                             name="email"
-                            value={formData.email}
-                            onChange={handleChange}
                             placeholder="you@example.com"
                             className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3.5 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none"
                             required
                           />
                         </div>
+                        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-400 text-xs mt-1" />
                       </div>
 
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-300">I am interested in</label>
+                        <label htmlFor="interest" className="text-sm font-medium text-gray-300">I am interested in</label>
                         <select
+                          id="interest"
                           name="interest"
-                          value={formData.interest}
-                          onChange={handleChange}
                           className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-gray-300"
                         >
                           <option value="" className="bg-gray-900">Select an option</option>
                           <option value="buying" className="bg-gray-900">Buying Property</option>
                           <option value="renting" className="bg-gray-900">Renting Property</option>
                           <option value="selling" className="bg-gray-900">Selling/Listing</option>
-                          <option value="investment" className="bg-gray-900">Investing</option>
                         </select>
+                        <ValidationError prefix="Interest" field="interest" errors={state.errors} className="text-red-400 text-xs mt-1" />
                       </div>
 
                       <button
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={state.submitting}
                         className="w-full group relative flex items-center justify-center gap-2 bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold py-4 rounded-xl shadow-xl shadow-teal-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
                       >
-                        {isSubmitting ? (
+                        {state.submitting ? (
                           <Loader2 className="w-5 h-5 animate-spin" />
                         ) : (
                           <>
@@ -258,10 +203,6 @@ function App() {
                           </>
                         )}
                       </button>
-
-                      {error && (
-                        <p className="text-red-400 text-sm text-center">{error}</p>
-                      )}
                     </form>
                   </motion.div>
                 ) : (
@@ -276,10 +217,10 @@ function App() {
                     </div>
                     <h2 className="text-3xl font-bold mb-4">You're on the list!</h2>
                     <p className="text-gray-400 mb-8 leading-relaxed">
-                      Thank you for joining our community. We'll send an invite to <span className="text-white font-medium">{formData.email}</span> as soon as we're ready.
+                      Thank you for joining our community. We've received your submission and will be in touch soon.
                     </p>
                     <button
-                      onClick={() => setIsSuccess(false)}
+                      onClick={() => window.location.reload()}
                       className="text-sm font-medium text-teal-400 hover:text-teal-300 transition-colors"
                     >
                       Back to form
