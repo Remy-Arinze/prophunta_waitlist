@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, CheckCircle2, Loader2, Home, Sparkles, Shield, Zap, Search, ArrowRight } from 'lucide-react'
+import { Mail, CheckCircle2, Loader2, Shield, Zap, Search, ArrowRight } from 'lucide-react'
 import './App.css'
 
 // Formspree endpoint
