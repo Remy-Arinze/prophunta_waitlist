@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, CheckCircle2, Loader2, Shield, Zap, Search, ArrowRight } from 'lucide-react'
+import { Mail, CheckCircle2, Loader2, Shield, Zap, ArrowRight } from 'lucide-react'
 import { useForm, ValidationError } from '@formspree/react'
 import './App.css'
 
@@ -11,17 +11,12 @@ const features = [
   {
     icon: <Zap className="w-6 h-6 text-teal-400" />,
     title: "Zero Agent Hassle",
-    description: "No more endless agent fees or 'inspection' stress. Connect directly with verified listings."
+    description: "No more endless agent fees or 'inspection' stress. Fewer middlemen. Clearer processes."
   },
   {
     icon: <Shield className="w-6 h-6 text-emerald-400" />,
     title: "Seamless Renting",
-    description: "Solving the unique challenges of the Nigerian rental market with transparent processes."
-  },
-  {
-    icon: <Search className="w-6 h-6 text-cyan-400" />,
-    title: "Global Management",
-    description: "Manage your properties, tenants, and payments from anywhere in the world."
+    description: "Solving the unique challenges of the Nigerian rental market with transparent processes and verified listings."
   }
 ]
 
@@ -91,13 +86,13 @@ function App() {
           >
             <div className="space-y-6">
               <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight">
-                Renting and <br />
-                <span className="text-gradient">Managing Properties</span> <br />
-                Just Got Easier.
+                A Simpler Way to <br />
+                <span className="text-gradient">Rent and Manage</span> <br />
+                Property
               </motion.h1>
               
               <motion.p variants={itemVariants} className="text-gray-400 text-base md:text-lg lg:text-xl max-w-xl leading-relaxed">
-                PropHunta is transforming the Nigerian real estate landscape by eliminating predatory agent fees and the constant stress of property inspections. Whether you're a tenant looking for a verified, hassle-free home or a property owner wanting to securely manage your assets, track tenants, and collect payments from anywhere in the world, we've built the all-in-one platform to make it happen.
+                PropHunta brings transparency to renting and property management in Nigeria by helping renters, property owners, and property firms simplify processes, reduce unnecessary agent layers, and operate with clarity.
               </motion.p>
             </div>
 
@@ -182,9 +177,8 @@ function App() {
                           className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all outline-none appearance-none cursor-pointer text-gray-300"
                         >
                           <option value="" className="bg-gray-900">Select an option</option>
-                          <option value="buying" className="bg-gray-900">Buying Property</option>
-                          <option value="renting" className="bg-gray-900">Renting Property</option>
-                          <option value="selling" className="bg-gray-900">Selling/Listing</option>
+                          <option value="renting" className="bg-gray-900">Rent Property</option>
+                          <option value="managing" className="bg-gray-900">Manage Property</option>
                         </select>
                         <ValidationError prefix="Interest" field="interest" errors={state.errors} className="text-red-400 text-xs mt-1" />
                       </div>
