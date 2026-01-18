@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Mail, CheckCircle2, Loader2, Shield, Zap, ArrowRight } from 'lucide-react'
+import { Mail, CheckCircle2, Loader2, Shield, Zap, ArrowRight, Facebook, Twitter } from 'lucide-react'
 import { useForm, ValidationError } from '@formspree/react'
 import './App.css'
 
@@ -234,10 +234,25 @@ function App() {
           className="mt-24 pt-8 border-t border-white/5 w-full max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-sm"
         >
           <p>© 2026 PropHunta Technologies. All rights reserved.</p>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+          <div className="flex gap-6">
+            <a 
+              href="https://www.facebook.com/PropHunta" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors"
+              aria-label="Facebook"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://x.com/PropHunta_" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hover:text-white transition-colors"
+              aria-label="Twitter"
+            >
+              <Twitter className="w-5 h-5" />
+            </a>
           </div>
         </motion.footer>
       </main>
